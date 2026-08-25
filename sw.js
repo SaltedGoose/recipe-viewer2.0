@@ -1,4 +1,4 @@
-const CACHE_NAME = "recipe-viewer-v4";
+const CACHE_NAME = "recipe-viewer-v9";
 
 const FILES_TO_CACHE = [
     "./",
@@ -6,15 +6,26 @@ const FILES_TO_CACHE = [
     "./styles.css",
     "./main.js",
     "./manifest.json",
-    "./images/burger button.png",
-     "./jquery.min.js",
+    "./sw.js",
+    "./jquery.min.js",
     "./anime.esm.min.js"
 ];
 
 self.addEventListener("install", event => {
     event.waitUntil(
         caches.open(CACHE_NAME)
-            .then(cache => cache.addAll(FILES_TO_CACHE))
+            .then(async cache => {
+
+                for (const file of FILES_TO_CACHE) {
+                    try {
+                        await cache.add(file);
+                        console.log("Cached:", file);
+                    } catch (error) {
+                        console.error("FAILED:", file, error);
+                    }
+                }
+
+            })
     );
 
     self.skipWaiting();

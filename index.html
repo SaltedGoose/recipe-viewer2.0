@@ -7,27 +7,14 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="manifest" href="manifest.json">
 </head>
-<div id="sw-status">Checking...</div>
-
 <script>
-navigator.serviceWorker.register("./sw.js")
-    .then(registration => {
-
-        document.getElementById("sw-status").innerHTML = `
-            <p>Scope: ${registration.scope}</p>
-            <p>Active: ${registration.active ? "YES" : "NO"}</p>
-            <p>Waiting: ${registration.waiting ? "YES" : "NO"}</p>
-            <p>Installing: ${registration.installing ? "YES" : "NO"}</p>
-            <p>Controller: ${navigator.serviceWorker.controller ? "YES" : "NO"}</p>
-        `;
-
-    })
-    .catch(error => {
-
-        document.getElementById("sw-status").textContent =
-            "ERROR: " + error;
-
-    });
+    navigator.serviceWorker.register("./sw.js")
+        .then(registration => {
+            console.log("Service worker registered");
+        })
+        .catch(error => {
+            console.error("Service worker registration failed:", error);
+        });
 </script>
 <body>
 

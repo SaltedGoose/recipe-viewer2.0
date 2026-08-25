@@ -2,7 +2,7 @@
     "name": "Recipe Viewer",
     "short_name": "Recipes",
     "description": "My personal recipe collection",
-    "start_url": "./index.html",
+    "start_url": "./",
     "display": "standalone",
     "background_color": "#FFE2AF",
     "theme_color": "#FFE2AF",

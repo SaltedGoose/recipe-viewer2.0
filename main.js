@@ -5,7 +5,6 @@ import { animate } from "./anime.esm.min.js";
 // ======================================================
 
 let recipes = [
-
     {
         type: "Main",
 
@@ -16,7 +15,7 @@ let recipes = [
 
         ingredients: [
             "2 Chicken Breasts",
-            "4 tbsp Butter",
+            "2 & 1/2 tbsp Butter",
             "1 tsp Garlic Granules",
             "1/2 tsp onion granules",
             "1 tsp Paprika",
@@ -30,11 +29,11 @@ let recipes = [
         ],
 
         instructions: [
-            "Cook Pasta",
-            "Melt 2 tbsp of Butter and fry Chicken in 1 tsp Paprika, 1/2 tsp Salt, Pepper, Thyme, Oregano and Onion Granules",
+            "Boil Pasta",
+            "Melt 1 & 1/2 tbsp of Butter and fry Chicken in 1 tsp Paprika, 1/2 tsp Salt, Pepper, Thyme, Oregano and Onion Granules",
             "Add 1/2 tsp of Garlic Granules and fry for 2 more mins",
             "Clean out pan",
-            "Melt 2 tbps Butter in pan and fry 1/2 tsp garlic garnules for 2 mins",
+            "Melt 1 tbps Butter in pan and fry 1/2 tsp garlic garnules for 2 mins",
             "Pour in 1/2 Cup of Cream and bring to a gentle simmer",
             "Stir in 1/4 Cup Parmesan Cheese, 1tsp Salt and 1/2 tsp Pepper",
             "Simmer for 3 - 5 mins or until sauce has thickened",
@@ -45,7 +44,6 @@ let recipes = [
         imagePath:
             "images/mains/Garlic Butter Chicken Pasta.jpg"
     },
-
 
     {
         type: "Main",
@@ -71,9 +69,9 @@ let recipes = [
         ],
 
         instructions: [
-            "Cook Chicken in 1 tsp Paprika, 1 tsp Garlic Granules, Onion Powder, Salt and Pepper",
+            "Cook Chicken in 1 tsp Paprika, 1/2 tsp Garlic Granules and 1/2 tsp Onion Powder, Salt and Pepper",
             "Clean out Pan",
-            "Melt 1 & 1/2 tbsp Butter in pan and fry Garlic for 2 mins",
+            "Melt 1 tbsp Butter in pan and fry 1/2 tsp of garlic granules for 2 mins",
             "Pour in 1/2 Cup of Cream and bring to a gentle simmer",
             "Stir in 1/4 Cup Parmesan Cheese, 1/2 tsp Salt and Pepper and simmer for 2-3 mins or until sauce thickens slightly",
             "Warm Wraps in Microwave for 10 secs",
@@ -86,7 +84,6 @@ let recipes = [
         imagePath:
             "images/mains/Cheesy Chicken Wraps.JPG"
     },
-
 
     {
         type: "Main",
@@ -111,14 +108,13 @@ let recipes = [
 
         instructions: [
             "Chop Broccoli into Florets",
-            "Chop Chicken into small pieces",
             "Boil Pasta in a Pan, once the Pasta is nearly cooked throw in Broccoli",
             "Once Cooked drain together and set aside",
             "Fry Chicken in a Pan covered in 1 tsp Cajun Seasoning",
             "Clean out pan",
-            "Melt 2 tbsp of Butter and saute 2 Cloves of Garlic (Minced) for 2 mins",
-            "Pour in Cream, add 1/2 tsp Garlic Powder and bring to a gentle simmer. Cook for 3-4 mins until cream begins to thicken",
-            "Stir in 1 Cup Parmesan Cheese and simmer until smooth and creamy. Season with Salt and Pepper",
+            "Melt 2 tbsp of Butter and saute 1 tsp garlic granules for 2 mins",
+            "Pour in 1 & 1/2 cups cream Cream, add 1/2 tsp Garlic Granules and bring to a gentle simmer. Cook for 3-4 mins until cream begins to thicken",
+            "Stir in 1 Cup Parmesan Cheese and simmer until smooth and creamy. Season with  1/2 tsp Salt and Pepper",
             "Mix Pasta, Broccoli and Chicken until everything is coated",
             "Serve while Hot"
         ],
@@ -127,18 +123,16 @@ let recipes = [
             "images/mains/Cajun Chicken Alfredo with Broccoli.JPG"
     },
 
-
     {
         type: "Main",
 
         name: "Chicken Parmesan Calzone",
 
-        description:
-            "Seasoned Chicken in a Marinara Sauce and Cheese wrapped in a Pizza Dough",
+        description: "Seasoned Chicken in a Marinara Sauce and Cheese wrapped in a Pizza Dough",
 
         ingredients: [
             "2 Chicken Breasts",
-            "1 tsp Garlic Powder",
+            "1 tsp Garlic Granules",
             "1 tsp Garlic Italian Seasoning",
             "1 Cup Marinara Sauce",
             "1 Cup Mozzarella Cheese",
@@ -150,7 +144,7 @@ let recipes = [
         ],
 
         instructions: [
-            "In a Pan fry Chicken in 1 tsp Garlic Powder and Garlic Italian Seasoning, Salt and Pepper",
+            "In a Pan fry Chicken in 1 tsp Garlic Granules and Garlic Italian Seasoning and 1/2 tsp Salt and Pepper",
             "Roll out Pizza Dough into a large circle on a lightly floured surface. 1/4 inch Thick",
             "On one half of the Dough Spread a layer of Marinara Sauce leaving the edges dry",
             "Add the Cooked Chicken on top of the Sauce followed by Mozzarella and Parmesan Cheese",
@@ -164,7 +158,6 @@ let recipes = [
         imagePath:
             "images/mains/Chicken Parmesan Calzone.jpg"
     },
-
 
     {
         type: "Main",
@@ -190,7 +183,7 @@ let recipes = [
         instructions: [
             "Cook Pasta",
             "Once Pasta nearly cooked add Broccoli and boil till both cooked",
-            "Melt 1 & 1/2 Butter in a Pan and then Fry Chicken in 1tsp Paprika and Garlic Powder and 1/2 tsp Onion Powder",
+            "Melt 1 & 1/2 Butter in a Pan and then Fry Chicken in 1tsp Paprika and 1/2 tsp Onion Powder and Garlic Granules",
             "Mix Pasta, Sauce and Chicken in a Pan until everything is coated",
             "Add Pasta to Dish and add Shredded Mozzarella occasionally",
             "Once Dish is full top with Sliced Mozzarella",
@@ -202,14 +195,12 @@ let recipes = [
             "images/mains/Chicken Broccoli Pasta Bake.JPG"
     },
 
-
     {
         type: "Main",
 
         name: "Shepards Pie",
 
-        description:
-            "Mince covered with Creamy Mash covered in Cheese and baked in the Oven",
+        description: "Mince covered with Creamy Mash covered in Cheese and baked in the Oven",
 
         ingredients: [
             "2 Carrots",
@@ -222,9 +213,9 @@ let recipes = [
         ],
 
         instructions: [
-            "Peel Carrots and shred",
-            "Peel Potatoes and chop into small chunks",
-            "Fry Mince in a Pan",
+            "Peel 2 Carrots and shred",
+            "Peel 1 & 1/2 Bags of Potatoes and chop into small chunks",
+            "Fry 750g of Mince in a Pan",
             "Put Potatoes in a big Pan and boil for 40 mins",
             "At the same time simmer mince in a Pan with the shredded Carrots and covered in Beef Stock. Simmer for 20 mins covered and 20 mins uncovered.",
             "Once Potatoes are boiled drain and mash with Milk and Butter",
@@ -237,14 +228,12 @@ let recipes = [
             "images/mains/Shepards Pie.jpg"
     },
 
-
     {
         type: "Starter",
 
         name: "Mozzarella Triangles",
 
-        description:
-            "Mozzarella Triangles in a rich Tomato Sauce",
+        description: "Mozzarella Triangles in a rich Tomato Sauce",
 
         ingredients: [
             "250g Mozzarella Cheese",
@@ -252,7 +241,7 @@ let recipes = [
             "2 Eggs",
             "1 & 1/2 Cups Bread Crumbs (Italian Seasoned)",
             "1 tsp Oregano",
-            "2 Cloves Crushed Garlic",
+            "1tsp Garlic Granules",
             "400g Chopped Tomatoes",
             "1 tbsp Tomato Puree",
             "1 tsp Sugar",
@@ -264,12 +253,12 @@ let recipes = [
             "Slice the Mozzarella into 1cm thick slices",
             "Cut each slice diagonally in half to make Triangles",
             "Dry the Slices in Kitchen Roll for 10 mins",
-            "Set up three bowls flour (Salt/Pepper), Eggs (Beaten), Breadcrumbs (Seasoned)",
+            "Set up three bowls 1 cup plain flour (Salt/Pepper), Eggs (Beaten), 1 & 1/2 Cups Breadcrumbs (Seasoned)",
             "Dip each Triangle in this order: Flour, Egg, Breadcrumbs, Egg and then Breadcrumbs",
             "Put Triangles on a Plate and freeze for 15-20 mins",
             "Heat Olive Oil in a Sauce Pan",
-            "Cook Garlic in Oil for 1-2 mins",
-            "Add Chopped Tomatoes, Tomato Puree, Sugar, Salt and Pepper",
+            "Cook 1 tsp Garlic Granules in Oil for 1-2 mins",
+            "Add 400g Chopped Tomatoes, 1 tbsp Tomato Puree, 1 tsp Sugar and Salt and Pepper",
             "Simmer for 15-20 mins",
             "Heat 2-3cm of oil in a pan until a wooden spoon dipped in starts to bubble",
             "Fry Triangles for 1-2 mins a side",

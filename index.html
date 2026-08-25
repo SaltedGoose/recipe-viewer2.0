@@ -11,9 +11,7 @@
 
 <script>
 navigator.serviceWorker.register("./sw.js")
-    .then(async registration => {
-
-        await registration.update();
+    .then(registration => {
 
         document.getElementById("sw-status").innerHTML = `
             <p>Scope: ${registration.scope}</p>
@@ -125,7 +123,7 @@ navigator.serviceWorker.register("./sw.js")
         <h4 id="footer-text"></h4>
     </footer>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="jquery.min.js"></script>
     <script>
         let today = new Date().getFullYear();
         $("#footer-text").text(`Niall Booth - ${today}`)

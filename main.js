@@ -1,4 +1,4 @@
-import { animate } from 'https://esm.sh/animejs';
+import { animate } from "./anime.esm.min.js";
 
 // ======================================================
 // YOUR RECIPES

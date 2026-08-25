@@ -6,7 +6,9 @@ const FILES_TO_CACHE = [
     "./styles.css",
     "./main.js",
     "./manifest.json",
-    "./images/burger button.png"
+    "./images/burger button.png",
+     "./jquery.min.js",
+    "./anime.esm.min.js"
 ];
 
 self.addEventListener("install", event => {

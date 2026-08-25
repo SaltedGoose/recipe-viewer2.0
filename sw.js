@@ -7,7 +7,7 @@ const FILES_TO_CACHE = [
     "./main.js",
     "./manifest.json",
     "./sw.js",
-    "./jquery.min.js",
+    "./jquery-4.0.0.min.js",
     "./anime.esm.min.js"
 ];
 

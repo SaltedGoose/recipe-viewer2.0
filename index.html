@@ -4,10 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recipe Website</title>
-
     <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="manifest.json">
 </head>
-
+<script>
+    if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.register("./sw.js")
+            .then(() => {
+                console.log("Service worker registered");
+            })
+            .catch(error => {
+                console.error("Service worker registration failed:", error);
+            });
+    }
+</script>
 <body>
 
     <nav>

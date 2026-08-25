@@ -1,4 +1,4 @@
-const CACHE_NAME = "recipe-viewer-v3";
+const CACHE_NAME = "recipe-viewer-v4";
 
 const FILES_TO_CACHE = [
     "./",

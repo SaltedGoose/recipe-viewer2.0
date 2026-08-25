@@ -10,33 +10,26 @@
 <div id="sw-status">Checking...</div>
 
 <script>
-    if ("serviceWorker" in navigator) {
+navigator.serviceWorker.register("./sw.js")
+    .then(async registration => {
 
-        navigator.serviceWorker.register("./sw.js")
-            .then(registration => {
+        await registration.update();
 
-                if (navigator.serviceWorker.controller) {
-                    document.getElementById("sw-status").textContent =
-                        "SW: REGISTERED + CONTROLLING";
-                } else {
-                    document.getElementById("sw-status").textContent =
-                        "SW: REGISTERED BUT NOT CONTROLLING";
-                }
+        document.getElementById("sw-status").innerHTML = `
+            <p>Scope: ${registration.scope}</p>
+            <p>Active: ${registration.active ? "YES" : "NO"}</p>
+            <p>Waiting: ${registration.waiting ? "YES" : "NO"}</p>
+            <p>Installing: ${registration.installing ? "YES" : "NO"}</p>
+            <p>Controller: ${navigator.serviceWorker.controller ? "YES" : "NO"}</p>
+        `;
 
-            })
-            .catch(error => {
-
-                document.getElementById("sw-status").textContent =
-                    "SW ERROR: " + error;
-
-            });
-
-    } else {
+    })
+    .catch(error => {
 
         document.getElementById("sw-status").textContent =
-            "Service workers not supported";
+            "ERROR: " + error;
 
-    }
+    });
 </script>
 <body>
 

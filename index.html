@@ -7,61 +7,72 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="manifest" href="manifest.json">
 </head>
-<script>
-    navigator.serviceWorker.register("./sw.js")
-        .then(registration => {
-            console.log("Service worker registered");
-        })
-        .catch(error => {
-            console.error("Service worker registration failed:", error);
-        });
-</script>
 <body>
-
+    <script>
+        navigator.serviceWorker.register("./sw.js")
+            .then(registration => {
+                console.log("Service worker registered");
+            })
+            .catch(error => {
+                console.error("Service worker registration failed:", error);
+            });
+    </script>
     <nav>
-
         <div id="top-nav">
-
             <h1>Recipe Viewer</h1>
-
             <button id="burger-button">
-                <img
-                    id="burger-button-img"
-                    src="images/burger button.png"
-                    alt="Menu"
-                >
+                <img id="burger-button-img" src="images/burger button.png" alt="Menu">
             </button>
-
         </div>
 
         <div id="bottom-nav">
-
-            <a href="index.html">
-                <h2>Home</h2>
-            </a>
-
-            <a href="add.html">
-                <h2>Add</h2>
-            </a>
-
+            <h2 id="home-button" class="nav-button">Home</h2>
+            <h2 id="add-button" class="nav-button">Add</h2>
             <form>
-                <input type="text">
-                <button type="submit">Search</button>
+                <input id="recipe-search" type="text" placeholder="Recipe Name" autocomplete="off">
+                <button id="search" type="button">Search</button>
             </form>
-
         </div>
-
     </nav>
-
     <div id="show-recipe">
-            <h2 id="show-recipe-name"></h2>
-            <img id="show-recipe-image" src="" alt="">
-            <h3 id="show-recipe-description"></h3>
-            <h3>Ingredients</h3>
-            <ul id="show-recipe-ingredients"></ul>
-            <h3>Instructions</h3>
-            <ol id="show-recipe-instructions"></ol>
-            <button id="close-recipe">Close</button>
+        <h2 id="show-recipe-name"></h2>
+        <img id="show-recipe-image" src="" alt="">
+        <h3 id="show-recipe-description"></h3>
+        <h3>Ingredients</h3>
+        <ul id="show-recipe-ingredients"></ul>
+        <h3>Instructions</h3>
+        <ol id="show-recipe-instructions"></ol>
+        <button id="close-recipe">Close</button>
+    </div>
+    <div id="recipe-search-results">
+        <h2>Search Results</h2>
+        <div id="result-display">
+        </div>
+        <button id="result-close">Close</button>
+    </div>
+    <div id="add-new-recipe">
+        <h2>Tell me about your creation:</h2>
+        <form id="recipe-input-form">
+            <label for="new-recipe-name">Recipe Name:</label>
+            <input class="recipe-input" type="text" name="new-recipe-name" id="new-recipe-name" placeholder="Recipe Name">
+            <label for="new-recipe-type">Recipe Type:</label>
+            <select name="new-recipe-type" id="new-recipe-type">
+                <option value="" selected disabled>Select a type:</option>
+                <option value="Starter">Starter</option>
+                <option value="Main">Main</option>
+                <option value="Desert">Desert</option>
+            </select>
+            <label for="new-recipe-description">Recipe Description:</label>
+            <input class="recipe-input" type="text" name="new-recipe-description" id="new-recipe-description" placeholder="Describe your recipe">
+            <label for="new-recipe-ingredients">Recipe Ingredients:</label>
+            <textarea col="4" rows="30" name="new-recipe-ingredients" id="new-recipe-ingredients" placeholder="Enter your ingredients seperated on a new line e.g. 2 tbsp Butter"></textarea>
+            <label for="new-recipe-instruction">Recipe Instructions:</label>
+            <textarea col="4" rows="30" name="new-recipe-instructions" id="new-recipe-instructions" placeholder="Enter the instructions seperated on a new line."></textarea>
+            <input type="file" id="recipe-image-input" accept="image/*" hidden>
+            <button id="recipe-image-button" type="button">📷 Add Recipe Image</button>
+            <button type="button" id="submit-new-recipe">Submit</button>
+            <button type="button" id="cancel-recipe">Cancel</button>
+        </form>
     </div>
     <main>
         <div id="food-preview">

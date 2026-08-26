@@ -315,11 +315,12 @@ let recipes = [
 // ======================================================
 
 let db;
-let allRecipes = {
+let allRecipesByType = {
     "Starters" : [],
     "Mains" : [],
     "Deserts" : []
 };
+let allRecipes;
 
 const DB_NAME = "recipeDB";
 const DB_VERSION = 1;
@@ -395,16 +396,17 @@ async function readDB() {
 
             existRecipes.forEach((recipe) => {
                 if (recipe.type === "Starter"){
-                    allRecipes.Starters.push(recipe);
+                    allRecipesByType.Starters.push(recipe);
                 }
                 else if (recipe.type === "Main"){
-                    allRecipes.Mains.push(recipe);
+                    allRecipesByType.Mains.push(recipe);
                 }
                 else if (recipe.type === "Desert"){
-                    allRecipes.Deserts.push(recipe);
+                    allRecipesByType.Deserts.push(recipe);
                 }
             })
 
+            allRecipes = existRecipes;
             loadInitRecipes();
             return
         }
@@ -466,7 +468,7 @@ function loadInitRecipes(){
     let types = ["Starters", "Mains", "Deserts"];
 
     $(".food-section").each(function(){
-        let initRecipe = allRecipes[types[currentTypeIndex]][0];
+        let initRecipe = allRecipesByType[types[currentTypeIndex]][0];
         let initRecipeName = initRecipe.name;
         let initImageURL = URL.createObjectURL(initRecipe.image);
 
@@ -481,6 +483,23 @@ function loadInitRecipes(){
 }
 
 let navBarExpanded = false;
+
+function hideBottomNav(){
+    animate("#bottom-nav", {
+        opacity: 0,
+        translateY: -10,
+        duration: 900,
+        ease: "in(3)",
+        onComplete: function () {
+            $("#bottom-nav").css(
+                "pointer-events",
+                "none"
+            );
+        }
+    });
+
+    navBarExpanded = false;
+}
 
 $("#burger-button").on("click", function () {
 
@@ -508,33 +527,14 @@ $("#burger-button").on("click", function () {
     }
 
     else {
-
-        animate("#bottom-nav", {
-
-            opacity: 0,
-
-            translateY: -10,
-
-            duration: 900,
-
-            ease: "in(3)",
-
-            onComplete: function () {
-
-                $("#bottom-nav").css(
-                    "pointer-events",
-                    "none"
-                );
-
-            }
-
-        });
-
-        navBarExpanded = false;
-
+        hideBottomNav();
     }
 
 });
+
+$("#home-button").on("click", function(){
+    location.reload();
+})
 
 // ======================================================
 // CAROUSEL
@@ -543,7 +543,7 @@ function moveCarousel(button, direction) {
 
     const type = $(button).data("type");
 
-    const recipeArray = allRecipes[type];
+    const recipeArray = allRecipesByType[type];
 
     const currentImage = button.parent().find("img");
     const currentRecipeHeading = button.parent().parent().find("h3");
@@ -568,7 +568,6 @@ function moveCarousel(button, direction) {
     currentRecipeHeading.text(newRecipe.name);
 }
 
-
 // ======================================================
 // FORWARD
 // ======================================================
@@ -576,7 +575,6 @@ function moveCarousel(button, direction) {
 $(".fwd").on("click", function () {
     moveCarousel($(this), 1);
 });
-
 
 // ======================================================
 // BACKWARD
@@ -592,8 +590,12 @@ $(".rwd").on("click", function () {
 $(".food-img").on("click", function(){
     const type = $(this).parent().find(".rwd").data("type");
     const name = $(this).attr("alt");
-    const foundRecipe = allRecipes[type].find(recipe => recipe.name === name);
+    const foundRecipe = allRecipesByType[type].find(recipe => recipe.name === name);
 
+    showRecipe(foundRecipe);
+})
+
+function showRecipe(foundRecipe){
     $("#show-recipe-name").text(foundRecipe.name);
     $("#show-recipe-image").attr("src", URL.createObjectURL(foundRecipe.image)).attr("alt", foundRecipe.name);
     $("#show-recipe-description").text(foundRecipe.description);
@@ -620,9 +622,10 @@ $(".food-img").on("click", function(){
             $("nav").css("filter", "blur(5px)");
             $("main").css("filter", "blur(5px)");
             $("#show-recipe").css("display", "flex");
+            hideBottomNav();
         }
     });
-})
+}
 
 $("#close-recipe").on("click", function(){
     $("#show-recipe").css("display", "flex");
@@ -636,4 +639,195 @@ $("#close-recipe").on("click", function(){
             $("#show-recipe").css("display", "none");
         }
     });
+})
+
+/* =========================
+   Search
+   ========================= */
+
+$("#search").on("click", function(){
+    $("#result-display").empty();
+
+    const recipeInput = $("#recipe-search");
+    const recipeToSearch = recipeInput.val().trim().toLowerCase();
+    const wordsToSearch = recipeToSearch.toLowerCase().split(/\s+/);
+
+    const foundRecipes = allRecipes.filter(recipe => {
+        return wordsToSearch.some(word =>
+            recipe.name.toLowerCase().includes(word) ||
+
+            recipe.description.toLowerCase().includes(word) ||
+
+            recipe.ingredients.some(ingredient =>
+                ingredient.toLowerCase().includes(word)
+            )
+        );
+    });
+
+    recipeInput.val("");
+
+    if(foundRecipes.length === 0){
+        const errorHeading = $("<h3>");
+        errorHeading.text(`No Recipes found containing: ${recipeToSearch}`);
+        $("#result-display").append(errorHeading);
+    }
+    else{
+        foundRecipes.forEach((recipe) => {
+            let html = `
+                <div class="result">
+                    <div class="result-description">
+                        <h3>${recipe.name}</h3>
+                        <p>${recipe.description}</p>
+                    </div>
+                    <img class="result-img" src="${URL.createObjectURL(recipe.image)}" alt="${recipe.name}">
+                </div>
+            `
+            $("#result-display").append(html);
+        })
+    }
+
+    animate("#recipe-search-results", {
+        opacity: 1,
+        duration: 1000,
+        ease: "out(3)",
+        oncomplete: function(){
+            $("nav").css("filter", "blur(5px)");
+            $("main").css("filter", "blur(5px)");
+            $("#recipe-search-results").css("display", "Flex");
+            hideBottomNav();
+        }
+    });
+})
+
+function hideRecipeSearchResults(){
+    animate("#recipe-search-results", {
+        opacity: 0,
+        duration: 1000,
+        ease: "out(3)",
+        oncomplete: function(){
+            $("nav").css("filter", "blur(0px)");
+            $("main").css("filter", "blur(0px)");
+            $("#recipe-search-results").css("display", "None");
+        }
+    });
+}
+
+$("#result-display").on("click", ".result", function(){
+    const foundRecipe = allRecipes.find(recipe => recipe.name === $(this).find("h3").text());
+    hideRecipeSearchResults();
+    showRecipe(foundRecipe);
+})
+
+$("#result-close").on("click", function(){
+    hideRecipeSearchResults();
+})
+
+/* =========================
+   Add new recipes
+   ========================= */
+
+let recipeError = false;
+
+function closeAddRecipe(){
+    animate("#add-new-recipe", {
+        opacity: 0,
+        duration: 1000,
+        ease: "out(3)",
+        oncomplete: function(){
+            $("nav").css("filter", "blur(0px)");
+            $("main").css("filter", "blur(0px)");
+            $("#add-new-recipe").css("display", "None");
+            recipeError = false;
+            location.reload();
+        }
+    });
+}
+
+$("#add-button").on("click", function(){
+    animate("#add-new-recipe", {
+        opacity: 1,
+        duration: 1000,
+        ease: "out(3)",
+        oncomplete: function(){
+            $("nav").css("filter", "blur(5px)");
+            $("main").css("filter", "blur(5px)");
+            $("#add-new-recipe").css("display", "Flex");
+            hideBottomNav();
+        }
+    });
+})
+
+$("#recipe-image-button").on("click", function(){
+    $("#recipe-image-input").click();
+})
+
+function showRecipeError(input){
+    input.css("border-color", "red");
+    recipeError = true;
+}
+
+$("#submit-new-recipe").on("click", function(){
+    recipeError = false;
+    const recipeName = $("#new-recipe-name").val();
+    const recipeType = $("#new-recipe-type").val();
+    const recipeDescription = $("#new-recipe-description").val();
+    const recipeIngredients = $("#new-recipe-ingredients").val();
+    const recipeInstructions = $("#new-recipe-instructions").val();
+    const imageInput = $("#recipe-image-input");
+
+    if(recipeName === ""){
+        showRecipeError($("#new-recipe-name"));
+    }
+    if (!recipeType){
+        showRecipeError($("#new-recipe-type"));
+    }
+    if(recipeDescription === ""){
+        showRecipeError($("#new-recipe-description"));
+    }
+    if (recipeIngredients === ""){
+        showRecipeError($("#new-recipe-ingredients"));
+    }
+    if (recipeInstructions === ""){
+        showRecipeError($("#new-recipe-instructions"));
+    }
+    if (imageInput[0].files.length === 0){
+        showRecipeError($("#recipe-image-button"));
+    }
+
+    if(recipeError === true){
+        return
+    }
+    else{
+        let newRecipeToAdd = {
+            type : recipeType,
+            name : recipeName,
+            description : recipeDescription,
+            ingredients : recipeIngredients.split("\n"),
+            instructions : recipeInstructions.split("\n"),
+            image : $("#recipe-image-input")[0].files[0]
+        }
+
+        const transaction = db.transaction([STORE_NAME], "readwrite");
+
+        transaction.oncomplete = (event) => {
+            console.log("Transaction Complete");
+            readDB();
+        }
+
+        transaction.onerror = (event) => {
+            console.log("Transaction Error");
+        }
+
+        const objectStore = transaction.objectStore(STORE_NAME);
+        const request = objectStore.add(newRecipeToAdd);
+        request.onsuccess = (event) => {
+            console.log(`${event.target.result} added.`)
+        }
+
+        closeAddRecipe();
+    }
+})
+
+$("#cancel-recipe").on("click", function(){
+    closeAddRecipe();
 })

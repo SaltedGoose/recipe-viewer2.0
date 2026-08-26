@@ -14,8 +14,8 @@ nav {
     width: 100%;
     height: 70px;
     z-index: 1000;
+    border-radius: 30px;
 }
-
 
 /* =========================
    TOP NAV
@@ -37,6 +37,7 @@ nav {
 
     position: relative;
     z-index: 2;
+    border-radius: 30px;
 }
 
 
@@ -90,9 +91,9 @@ h2 {
     position: absolute;
 
     top: 70px;
-    left: 0;
+    left: 18px;
 
-    width: 100%;
+    width: 90%;
 
     padding: 10px;
 
@@ -114,12 +115,19 @@ h2 {
     z-index: 1;
 }
 
-
-#bottom-nav a {
-    text-decoration: none;
-    color: black;
+.nav-button{
+    width: 25%;
+    border-radius: 30px;
+    padding: 5px 10px;
+    text-align: center;
+    box-sizing: border-box;
+    border: 1px solid #F9D2BA;
 }
 
+.nav-button:active{
+    text-shadow: 0 4px 5px black;
+    border-color: black;
+}
 
 /* =========================
    SEARCH
@@ -127,22 +135,19 @@ h2 {
 
 form input {
     border-radius: 30px;
-
     height: 25px;
-    width: 200px;
-
+    width: 185px;
     margin-right: 10px;
+    padding: 0 10px;
+    box-sizing: border-box;
 }
 
 
 form button {
     background: none;
-
     border: 1px solid black;
     border-radius: 30px;
-
     padding: 10px 20px;
-
     cursor: pointer;
 }
 
@@ -204,7 +209,6 @@ main {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    border: 1px solid red;
     width: 100%;
     height: 750px;
     gap: 30px;
@@ -229,7 +233,7 @@ main {
 }
 
 .rotate-btn{
-    background-color: aqua;
+    background-color: #F9D2BA;
     border: none;
     border-radius: 30px;
     width: 10%;
@@ -280,7 +284,7 @@ footer{
     top: 0;
     display: none;
     width: 90%;
-    height: 1500px;
+    min-height: 1600px;
     border-radius: 30px;
     box-shadow: 0 4px 10px black;
     background-color: #FFE2AF;
@@ -311,7 +315,7 @@ footer{
 }
 
 #close-recipe{
-    background-color: red;
+    background-color: #DF301C;
     border: none;
     border-radius: 30px;
     padding: 10px;
@@ -322,4 +326,159 @@ footer{
 
 #close-recipe:active{
     box-shadow: 0 4px 8px black;
+}
+
+/* =========================
+   Search
+   ========================= */
+
+#recipe-search-results{
+    position: absolute;
+    top: 100px;
+    left: 20px;
+    display: none;
+    opacity: 0;
+    flex-direction: column;
+    width: 90%;
+    min-height: 300px;
+    background-color: #FFE2AF;
+    z-index: 1000;
+    box-sizing: border-box;
+    padding: 15px;
+    border-radius: 30px;
+    align-items: center;
+    box-shadow: 0 4px 10px black;
+}
+
+#result-display{
+    width: 100%;
+    min-height: 300px;
+    margin: 30px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+#result-close{
+    background-color: #DF301C;
+    border: none;
+    border-radius: 30px;
+    color: white;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+#result-close:active{
+    box-shadow: 0 4px 8px black;
+}
+
+.result{
+    background-color: #FFE2AF;
+    border-radius: 30px;
+    padding: 19px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    box-shadow: 0 4px 6px black;
+    width: 100%;
+    min-height: 200px;
+    gap: 10px;
+}
+
+.result-description{
+    width: 70%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.result-img{
+    width: 30%;
+    height: 30%;
+    object-fit: contain;
+    border-radius: 50%;
+}
+
+/* =========================
+   Add new recipe
+   ========================= */
+
+#add-new-recipe{
+    position: absolute;
+    top: 100px;
+    left: 20px;
+    display: none;
+    opacity: 0;
+    flex-direction: column;
+    width: 90%;
+    min-height: 400px;
+    background-color: #FFE2AF;
+    z-index: 1000;
+    box-sizing: border-box;
+    padding: 15px;
+    border-radius: 30px;
+    align-items: center;
+    box-shadow: 0 4px 10px black;
+    gap: 20px;
+}
+
+#recipe-input-form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+}
+
+#submit-new-recipe{
+    background-color: #7CD5C7;
+    border: none;
+    border-radius: 30px;
+    color: white;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+#cancel-recipe{
+    background-color: #DF301C;
+    border: none;
+    border-radius: 30px;
+    color: white;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+select{
+    border-radius: 30px;
+    padding: 10px;
+    box-sizing: border-box;
+    width: 35%;
+    text-align: center;
+    border: 1px solid #FFE2AF;
+}
+
+.recipe-input{
+    padding: 5px 10px;
+    box-sizing: border-box;
+    width: 70%;
+    height: 30px;
+    border: 1px solid #FFE2AF;
+}
+
+#recipe-image-button{
+    background-color: #FFE2AF;
+    border: 1px solid black;
+    border-radius: 30px;
+    color: black;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+textarea{
+    width: 90%;
+    padding: 20px;
+    box-sizing: border-box;
+    border-radius: 30px;
+    border: 1px solid #FFE2AF;
 }

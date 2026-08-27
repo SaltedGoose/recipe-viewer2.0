@@ -24,6 +24,7 @@ let allRecipesByType = {
     "Deserts" : []
 };
 let allRecipes;
+let oldRecipeURL;
 
 const DB_NAME = "recipeDB";
 const DB_VERSION = 1;
@@ -710,6 +711,23 @@ $("#submit-new-recipe").on("click", async function(){
             console.log(`${event.target.result} added.`)
         }
     }
+})
+
+$("#recipe-image-input").on("change", function(){
+    if ($("#recipe-image-input")[0].files.length === 0){
+        return;
+    }
+
+    if (oldRecipeURL && oldRecipeURL.startsWith("blob:")) {
+        URL.revokeObjectURL(oldRecipeURL);
+    }
+
+    const selectedImage = $("#recipe-image-input")[0].files[0];
+    const imageURL = URL.createObjectURL(selectedImage);
+    oldRecipeURL = imageURL;
+    
+    $("#recipe-image-preview").attr("src", imageURL).css("display", "block");
+    $("#recipe-image-button").css("border", "3px solid #7CD5C7");
 })
 
 $("#cancel-recipe").on("click", function(){

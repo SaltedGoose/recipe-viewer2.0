@@ -482,3 +482,13 @@ textarea{
     border-radius: 30px;
     border: 1px solid #FFE2AF;
 }
+
+#recipe-image-preview{
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+    display: none;
+    border: 2px solid black;
+    box-sizing: border-box;
+}

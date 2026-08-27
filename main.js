@@ -714,7 +714,7 @@ $("#submit-new-recipe").on("click", async function(){
 })
 
 $("#recipe-image-input").on("change", function(){
-    if ($("#recipe-image-input")[0].files.length === 0){
+    if (this.files.length === 0){
         return;
     }
 
@@ -722,7 +722,7 @@ $("#recipe-image-input").on("change", function(){
         URL.revokeObjectURL(oldRecipeURL);
     }
 
-    const selectedImage = $("#recipe-image-input")[0].files[0];
+    const selectedImage = this.files[0];
     const imageURL = URL.createObjectURL(selectedImage);
     oldRecipeURL = imageURL;
     

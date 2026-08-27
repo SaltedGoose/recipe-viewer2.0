@@ -1,314 +1,17 @@
 import { animate } from "./anime.esm.min.js";
+import { createClient } from "./supabase.js";
 
 // ======================================================
-// YOUR RECIPES
+// SUPABASE
 // ======================================================
 
-let recipes = [
-    {
-        type: "Main",
+const SUPABASE_URL = "https://iypgxapqiforaqjswnmk.supabase.co";
+const SUPABASE_KEY = "sb_publishable_RbinenO0faAHTVlXaev44Q_Lhb6PdP3";
 
-        name: "Garlic Butter Chicken Pasta",
-
-        description:
-            "Garlic Butter Chicken in a Cream Cheese and Herb Sauce",
-
-        ingredients: [
-            "2 Chicken Breasts",
-            "2 & 1/2 tbsp Butter",
-            "1 tsp Garlic Granules",
-            "1/2 tsp onion granules",
-            "1 tsp Paprika",
-            "1 & 1/2 tsp Salt",
-            "1 tsp Pepper",
-            "1/2 tsp Thyme",
-            "1/2 tsp Oregano",
-            "? Pasta",
-            "1/2 Cup Cream",
-            "1/4 Cup Parmesan Cheese"
-        ],
-
-        instructions: [
-            "Boil Pasta",
-            "Melt 1 & 1/2 tbsp of Butter and fry Chicken in 1 tsp Paprika, 1/2 tsp Salt, Pepper, Thyme, Oregano and Onion Granules",
-            "Add 1/2 tsp of Garlic Granules and fry for 2 more mins",
-            "Clean out pan",
-            "Melt 1 tbps Butter in pan and fry 1/2 tsp garlic garnules for 2 mins",
-            "Pour in 1/2 Cup of Cream and bring to a gentle simmer",
-            "Stir in 1/4 Cup Parmesan Cheese, 1tsp Salt and 1/2 tsp Pepper",
-            "Simmer for 3 - 5 mins or until sauce has thickened",
-            "Add Pasta and Chicken to pan and stir until everything is coated evenly",
-            "Serve while hot"
-        ],
-
-        imagePath:
-            "images/mains/Garlic Butter Chicken Pasta.jpg"
-    },
-
-    {
-        type: "Main",
-
-        name: "Cheesy Chicken Wraps",
-
-        description:
-            "Seasoned Chicken in a Cheesy Garlic Sauce, wrapped in tortilla wraps",
-
-        ingredients: [
-            "2 Chicken Breasts",
-            "1 tsp Garlic Granules",
-            "1 tsp Paprika",
-            "1/2 tsp Onion Granules",
-            "1/2 Salt",
-            "1/2 Pepper",
-            "1 & 1/2 tsp Butter",
-            "1/2 Cup Cream",
-            "1/4 Cup Parmesan Cheese",
-            "4 Large Wraps",
-            "1 Cup Cheddar Cheese",
-            "1/4 Cup Mozzarella Cheese"
-        ],
-
-        instructions: [
-            "Cook Chicken in 1 tsp Paprika, 1/2 tsp Garlic Granules and 1/2 tsp Onion Powder, Salt and Pepper",
-            "Clean out Pan",
-            "Melt 1 tbsp Butter in pan and fry 1/2 tsp of garlic granules for 2 mins",
-            "Pour in 1/2 Cup of Cream and bring to a gentle simmer",
-            "Stir in 1/4 Cup Parmesan Cheese, 1/2 tsp Salt and Pepper and simmer for 2-3 mins or until sauce thickens slightly",
-            "Warm Wraps in Microwave for 10 secs",
-            "Assemble wraps with Chicken, Sauce, Cheddar Cheese and Mozzarella Cheese",
-            "Fold the Wraps tucking in the sides as you roll them up",
-            "Toast the wraps in a toastie maker until crispy and cheese has begun to melt",
-            "Slice wraps in half and serve while hot"
-        ],
-
-        imagePath:
-            "images/mains/Cheesy Chicken Wraps.JPG"
-    },
-
-    {
-        type: "Main",
-
-        name: "Cajun Chicken Alfredo with Broccoli",
-
-        description:
-            "Pasta, Cajun Chicken and Broccoli in a Creamy Alfredo Sauce",
-
-        ingredients: [
-            "2 Chicken Breasts",
-            "1 tsp Cajun Seasoning",
-            "2 tbsp Butter",
-            "1 tsp Garlic",
-            "1 & 1/2 Cups Cream",
-            "1 Cup Parmesan Cheese",
-            "1/2 tsp Salt",
-            "1/2 tsp Pepper",
-            "? Pasta",
-            "1 Broccoli"
-        ],
-
-        instructions: [
-            "Chop Broccoli into Florets",
-            "Boil Pasta in a Pan, once the Pasta is nearly cooked throw in Broccoli",
-            "Once Cooked drain together and set aside",
-            "Fry Chicken in a Pan covered in 1 tsp Cajun Seasoning",
-            "Clean out pan",
-            "Melt 2 tbsp of Butter and saute 1 tsp garlic granules for 2 mins",
-            "Pour in 1 & 1/2 cups cream Cream, add 1/2 tsp Garlic Granules and bring to a gentle simmer. Cook for 3-4 mins until cream begins to thicken",
-            "Stir in 1 Cup Parmesan Cheese and simmer until smooth and creamy. Season with  1/2 tsp Salt and Pepper",
-            "Mix Pasta, Broccoli and Chicken until everything is coated",
-            "Serve while Hot"
-        ],
-
-        imagePath:
-            "images/mains/Cajun Chicken Alfredo with Broccoli.JPG"
-    },
-
-    {
-        type: "Main",
-
-        name: "Chicken Parmesan Calzone",
-
-        description: "Seasoned Chicken in a Marinara Sauce and Cheese wrapped in a Pizza Dough",
-
-        ingredients: [
-            "2 Chicken Breasts",
-            "1 tsp Garlic Granules",
-            "1 tsp Garlic Italian Seasoning",
-            "1 Cup Marinara Sauce",
-            "1 Cup Mozzarella Cheese",
-            "1/2 Cup Parmesan Cheese",
-            "? Salt",
-            "? Pepper",
-            "2 Packs Pizza Dough",
-            "1 Egg (Beaten)"
-        ],
-
-        instructions: [
-            "In a Pan fry Chicken in 1 tsp Garlic Granules and Garlic Italian Seasoning and 1/2 tsp Salt and Pepper",
-            "Roll out Pizza Dough into a large circle on a lightly floured surface. 1/4 inch Thick",
-            "On one half of the Dough Spread a layer of Marinara Sauce leaving the edges dry",
-            "Add the Cooked Chicken on top of the Sauce followed by Mozzarella and Parmesan Cheese",
-            "Fold the other half of the Dough over the filling pressing the edges together to seal.",
-            "Use a fork to crimp the edges to ensure its sealed",
-            "Brush the beaten egg on the top of the Calzone and make slits in the top using a Knife so Steam can escape",
-            "Cook in the Oven at 220C for 10 mins turn it around and then cook for 10 more mins",
-            "Remove from Oven, cut into servings and serve while hot"
-        ],
-
-        imagePath:
-            "images/mains/Chicken Parmesan Calzone.jpg"
-    },
-
-    {
-        type: "Main",
-
-        name: "Chicken and Broccoli Pasta Bake",
-
-        description:
-            "Chicken and Broccoli Pasta Bake covered in Cheese and baked in Oven",
-
-        ingredients: [
-            "2 Chicken Breasts",
-            "1 Broccoli",
-            "1/2 Dish Pasta",
-            "1 Jar Creamy Tomato Sauce",
-            "? Shredded Mozzarella Cheese",
-            "? Sliced Mozzarella Cheese",
-            "1 tsp Paprika",
-            "1 tsp Garlic Powder",
-            "1/2 tsp Onion Powder",
-            "1 & 1/2 tbsp Butter"
-        ],
-
-        instructions: [
-            "Cook Pasta",
-            "Once Pasta nearly cooked add Broccoli and boil till both cooked",
-            "Melt 1 & 1/2 Butter in a Pan and then Fry Chicken in 1tsp Paprika and 1/2 tsp Onion Powder and Garlic Granules",
-            "Mix Pasta, Sauce and Chicken in a Pan until everything is coated",
-            "Add Pasta to Dish and add Shredded Mozzarella occasionally",
-            "Once Dish is full top with Sliced Mozzarella",
-            "Heat Oven to 180C and cook Pasta Bake for 40 mins",
-            "Then serve while hot"
-        ],
-
-        imagePath:
-            "images/mains/Chicken Broccoli Pasta Bake.JPG"
-    },
-
-    {
-        type: "Main",
-
-        name: "Shepards Pie",
-
-        description: "Mince covered with Creamy Mash covered in Cheese and baked in the Oven",
-
-        ingredients: [
-            "2 Carrots",
-            "750g Mince",
-            "500ml Beef Stock",
-            "1 & 1/2 Bags Potatoes",
-            "? Milk",
-            "? Butter",
-            "200g Cheese grated"
-        ],
-
-        instructions: [
-            "Peel 2 Carrots and shred",
-            "Peel 1 & 1/2 Bags of Potatoes and chop into small chunks",
-            "Fry 750g of Mince in a Pan",
-            "Put Potatoes in a big Pan and boil for 40 mins",
-            "At the same time simmer mince in a Pan with the shredded Carrots and covered in Beef Stock. Simmer for 20 mins covered and 20 mins uncovered.",
-            "Once Potatoes are boiled drain and mash with Milk and Butter",
-            "Put the Mince in an Oven Proof Dish and Cover with Creamy Mash. Then top with Grated Cheese",
-            "Bake in the Oven for 25 mins",
-            "Serve while Hot"
-        ],
-
-        imagePath:
-            "images/mains/Shepards Pie.jpg"
-    },
-
-    {
-        type: "Starter",
-
-        name: "Mozzarella Triangles",
-
-        description: "Mozzarella Triangles in a rich Tomato Sauce",
-
-        ingredients: [
-            "250g Mozzarella Cheese",
-            "1 Cup Plain Flour",
-            "2 Eggs",
-            "1 & 1/2 Cups Bread Crumbs (Italian Seasoned)",
-            "1 tsp Oregano",
-            "1tsp Garlic Granules",
-            "400g Chopped Tomatoes",
-            "1 tbsp Tomato Puree",
-            "1 tsp Sugar",
-            "? Salt",
-            "? Pepper"
-        ],
-
-        instructions: [
-            "Slice the Mozzarella into 1cm thick slices",
-            "Cut each slice diagonally in half to make Triangles",
-            "Dry the Slices in Kitchen Roll for 10 mins",
-            "Set up three bowls 1 cup plain flour (Salt/Pepper), Eggs (Beaten), 1 & 1/2 Cups Breadcrumbs (Seasoned)",
-            "Dip each Triangle in this order: Flour, Egg, Breadcrumbs, Egg and then Breadcrumbs",
-            "Put Triangles on a Plate and freeze for 15-20 mins",
-            "Heat Olive Oil in a Sauce Pan",
-            "Cook 1 tsp Garlic Granules in Oil for 1-2 mins",
-            "Add 400g Chopped Tomatoes, 1 tbsp Tomato Puree, 1 tsp Sugar and Salt and Pepper",
-            "Simmer for 15-20 mins",
-            "Heat 2-3cm of oil in a pan until a wooden spoon dipped in starts to bubble",
-            "Fry Triangles for 1-2 mins a side",
-            "Drain excess oil off Triangles on some Kitchen Roll",
-            "Serve Triangles and Sauce Together"
-        ],
-
-        imagePath:
-            "images/starters/Mozzarella Triangles.jpg"
-    },
-
-
-    {
-        type: "Desert",
-
-        name: "Scooby Snacks",
-
-        description:
-            "Home Made Cinnamon Scooby Snack Biscuits",
-
-        ingredients: [
-            "1 & 1/2 Cups Wheat Flour",
-            "1/2 Cup Plain Flour",
-            "1/2 Cup Brown Sugar",
-            "1/2 tsp Baking Powder",
-            "1/2 tsp Baking Soda",
-            "1/2 tsp Salt",
-            "1 tsp Cinnamon",
-            "1/3 Cup Unsalted Butter",
-            "3 tbsp Honey",
-            "3 tbsp Milk",
-            "1 tsp Vanilla Extract"
-        ],
-
-        instructions: [
-            "Mix all dry ingredients: Flour, Wheat Flour, Brown Sugar, Baking Soda/ Powder, Salt, Cinnamon",
-            "Add Butter and mix together with fingers until butter is gone and mixture feels like crumbs",
-            "Add Honey, Milk and Vanilla Extract. Mix until a Dough forms",
-            "Roll the Dough into a flat disc and chill in the Fridge for at 1hr",
-            "Roll the Dough out and cut Biscuits out using the cookie cutter",
-            "Place on a tray lined with Baking Paper and bake in the Oven at 180 Degrees",
-            "Bake for 10 mins and Spin Tray around then bake for a further 7 mins",
-            "Cool on Plates with Kitchen Roll on for 7.5 mins then flip them over and cool for a further 7.5 mins"
-        ],
-
-        imagePath:
-            "images/deserts/Scooby Snacks.jpg"
-    }
-
-];
+const supabase = createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
 
 // ======================================================
 // INDEXEDDB
@@ -327,7 +30,6 @@ const DB_VERSION = 1;
 const STORE_NAME = "recipes";
 
 const request = indexedDB.open(DB_NAME, DB_VERSION);
-
 
 // ======================================================
 // CREATE DATABASE / OBJECT STORE
@@ -357,7 +59,6 @@ request.onupgradeneeded = function (event) {
     }
 };
 
-
 // ======================================================
 // DATABASE CONNECTED
 // ======================================================
@@ -367,9 +68,14 @@ request.onsuccess = async function (event) {
     db = event.target.result;
 
     console.log("IndexedDB connected");
-    await readDB();
-};
 
+    if (navigator.onLine) {
+        await readDB("Update");
+    }
+    else{
+        await readDB("Read");
+    }
+};
 
 // ======================================================
 // DATABASE ERROR
@@ -382,72 +88,161 @@ request.onerror = function (event) {
         event.target.error
     );
 
-};
+};  
 
-async function readDB() {
-    const transaction = db.transaction([STORE_NAME]);
-    const objectStore = transaction.objectStore(STORE_NAME);
-    const request = objectStore.getAll();
+// ======================================================
+// Retrieve from Supabase
+// ======================================================
 
-    request.onsuccess = function(){
-        const existRecipes = request.result;
-        if (existRecipes.length > 0){
-            console.log(`${existRecipes.length} recipes exist, continuing...`);
+async function getRecipesFromSupabase() {
+    const { data, error } = await supabase
+        .from("recipes")
+        .select("*");
 
-            existRecipes.forEach((recipe) => {
-                if (recipe.type === "Starter"){
-                    allRecipesByType.Starters.push(recipe);
-                }
-                else if (recipe.type === "Main"){
-                    allRecipesByType.Mains.push(recipe);
-                }
-                else if (recipe.type === "Desert"){
-                    allRecipesByType.Deserts.push(recipe);
-                }
-            })
-
-            allRecipes = existRecipes;
-            loadInitRecipes();
-            return
-        }
-        loadRecipes();
+    if (error) {
+        console.error("Error getting recipes:", error);
+        return;
     }
 
-    request.onerror = function(){
-        console.log("Error reading database!");
+    console.log("Recipes downloaded from Supabase:", data);
+
+    return data;
+}
+
+async function getImageFromSupabse(imageURL) {
+    const {data, error} = await supabase.storage
+        .from("recipe-images")
+        .download(imageURL);
+    
+    if(error){
+        console.error("Image download failed:", error);
+        return null;
+    }
+    else{
+        console.log("Image downloaded successfully", data);
+    }
+
+    return data;
+}
+
+// ======================================================
+// Write to Supabase
+// ======================================================
+
+async function writeToSupabase(recipe) {
+    const fileExtension = recipe.image.name.split(".").pop();
+    const imagePath = `${recipe.id}.${fileExtension}`;
+
+    // Upload image
+    const { error: imageError } = await supabase.storage
+        .from("recipe-images")
+        .upload(imagePath, recipe.image);
+
+    if (imageError) {
+        console.error("Image upload failed:", imageError);
+        return false;
+    }
+
+    // Make a copy without the image
+    const recipeForSupabase = {
+        id: recipe.id,
+        type: recipe.type,
+        name: recipe.name,
+        description: recipe.description,
+        ingredients: recipe.ingredients,
+        instructions: recipe.instructions,
+        image_path: imagePath
+    };
+
+    // Upload recipe data
+    const { error: recipeError } = await supabase
+        .from("recipes")
+        .insert(recipeForSupabase);
+
+    if (recipeError) {
+        console.error("Recipe upload failed:", recipeError);
+        // Recipe failed, so remove the image we just uploaded
+        const { error: deleteError } = await supabase.storage
+            .from("recipe-images")
+            .remove([imagePath]);
+        if (deleteError) {
+            console.error(
+                "Failed to remove orphaned image:",
+                deleteError
+            );
+        }
+        else {
+            console.log("Orphaned image removed:",imagePath);
+        }
+        return false;
+    }
+
+    console.log("Recipe uploaded to Supabase:",recipe.name);
+    return true;
+}
+
+async function uploadPendingRecipes(indexDBRecipes) {
+
+    const pendingRecipes = indexDBRecipes.filter(recipe => recipe.status === "Pending");
+
+    if (pendingRecipes.length === 0) {
+        console.log("No pending recipes to upload.");
+        return;
+    }
+
+    console.log(`${pendingRecipes.length} pending recipes found.`);
+
+    for (const recipe of pendingRecipes) {
+        const success = await writeToSupabase(recipe);
+        if (success) {
+            console.log(`Successfully uploaded: ${recipe.name}`);
+
+            recipe.status = "Synced";
+
+            const transaction = db.transaction([STORE_NAME],"readwrite");
+            const objectStore = transaction.objectStore(STORE_NAME);
+            objectStore.put(recipe);
+        }
+        else {
+            console.log(`Failed to upload: ${recipe.name}`);
+        }
     }
 }
 
-async function loadRecipes(){
+async function loadIndexDBRecipes(currentRecipes) {
+    const retrivedRecipes = await getRecipesFromSupabase()
+    if(!retrivedRecipes){
+        readDB("Read");
+        return
+    }
+    let newRecipes = retrivedRecipes.filter(supabaseRecipe => !currentRecipes.some(localRecipe => localRecipe.id === supabaseRecipe.id));
+
     const recipesToAdd = await Promise.all(
-        recipes.map(async (recipe) => {
-            const response = await fetch(recipe.imagePath);
-
-            if (!response.ok){
-                throw new Error(`Could not load image ${recipe.imagePath}`); 
+        newRecipes.map(async (recipe) => {
+            const imageFile = await getImageFromSupabse(recipe.image_path)
+            if (!imageFile) {
+                console.error(
+                    `Skipping ${recipe.name} because its image could not be downloaded.`
+                );
+                return null;
             }
-
-            const imageBlob = await response.blob();
-
-            return {
-                type : recipe.type,
-                name : recipe.name,
-                description : recipe.description,
-                ingredients : recipe.ingredients,
-                instructions : recipe.instructions,
-                image : imageBlob
-            }
+            delete recipe.image_path;
+            recipe.image = imageFile;
+            recipe.status = "Synced"
+            return recipe;
         })
-    );
+    )
 
-    // At this point ALL fetches have finished
-    console.log(`${recipesToAdd.length} recipes ready to add`);
+    const validRecipes = recipesToAdd.filter(recipe => recipe !== null);
+
+    console.log(`${validRecipes.length} recipes ready to add`);
 
     const transaction = db.transaction([STORE_NAME], "readwrite");
 
     transaction.oncomplete = (event) => {
         console.log("Transaction Complete");
-        readDB();
+        readDB("Read");
+        return;
     }
 
     transaction.onerror = (event) => {
@@ -455,10 +250,50 @@ async function loadRecipes(){
     }
 
     const objectStore = transaction.objectStore(STORE_NAME);
-    recipesToAdd.forEach((recipe) => {
+    validRecipes.forEach((recipe) => {
         const request = objectStore.add(recipe);
         request.onsuccess = (event) => {
             console.log(`${event.target.result} added.`)
+        }
+    })
+}
+
+async function readDB(readStatus) {
+    const transaction = db.transaction([STORE_NAME]);
+    const objectStore = transaction.objectStore(STORE_NAME);
+    const request = objectStore.getAll();
+
+    request.onsuccess = async function(){
+        if(readStatus === "Update"){
+            await uploadPendingRecipes(request.result);
+            await loadIndexDBRecipes(request.result);
+        }
+        else if(readStatus === "Read"){
+            allRecipes = request.result;
+            groupRecipesByType();
+            loadInitRecipes();
+        }
+    }
+
+    request.onerror = function(){
+        console.log("Error reading database!");
+    }
+}
+
+function groupRecipesByType(){
+    allRecipesByType.Starters = [];
+    allRecipesByType.Mains = [];
+    allRecipesByType.Deserts = [];
+
+    allRecipes.forEach(recipe => {
+        if (recipe.type === "Starter"){
+            allRecipesByType.Starters.push(recipe);
+        }
+        else if (recipe.type === "Main"){
+            allRecipesByType.Mains.push(recipe);
+        }
+        else if (recipe.type === "Desert"){
+            allRecipesByType.Deserts.push(recipe);
         }
     })
 }
@@ -490,7 +325,7 @@ function hideBottomNav(){
         translateY: -10,
         duration: 900,
         ease: "in(3)",
-        onComplete: function () {
+        oncomplete: function () {
             $("#bottom-nav").css(
                 "pointer-events",
                 "none"
@@ -540,12 +375,12 @@ $("#home-button").on("click", function(){
 // CAROUSEL
 // ===================================================  
 function moveCarousel(button, direction) {
-
     const type = $(button).data("type");
 
     const recipeArray = allRecipesByType[type];
 
     const currentImage = button.parent().find("img");
+    const oldURL = currentImage.attr("src");
     const currentRecipeHeading = button.parent().parent().find("h3");
     const currentRecipeName = currentImage.attr("alt");
 
@@ -562,6 +397,9 @@ function moveCarousel(button, direction) {
 
     const newRecipe = recipeArray[currentIndex];
     const imageURL = URL.createObjectURL(newRecipe.image);
+    if (oldURL && oldURL.startsWith("blob:")) {
+        URL.revokeObjectURL(oldURL);
+    }
 
     currentImage.attr("src", imageURL);
     currentImage.attr("alt",newRecipe.name);
@@ -596,8 +434,12 @@ $(".food-img").on("click", function(){
 })
 
 function showRecipe(foundRecipe){
+    const oldURL = $("#show-recipe-image").attr("src");
     $("#show-recipe-name").text(foundRecipe.name);
     $("#show-recipe-image").attr("src", URL.createObjectURL(foundRecipe.image)).attr("alt", foundRecipe.name);
+    if (oldURL && oldURL.startsWith("blob:")) {
+        URL.revokeObjectURL(oldURL);
+    }
     $("#show-recipe-description").text(foundRecipe.description);
     let ingredients = $("#show-recipe-ingredients");
     ingredients.empty();
@@ -613,7 +455,7 @@ function showRecipe(foundRecipe){
         nextInstruction.text(instruction);
         instructions.append(nextInstruction);
     });
-
+    $("#show-recipe").css("display", "flex");
     animate("#show-recipe", {
         opacity: 1,
         duration: 1000,
@@ -621,14 +463,12 @@ function showRecipe(foundRecipe){
         oncomplete: function(){
             $("nav").css("filter", "blur(5px)");
             $("main").css("filter", "blur(5px)");
-            $("#show-recipe").css("display", "flex");
             hideBottomNav();
         }
     });
 }
 
 $("#close-recipe").on("click", function(){
-    $("#show-recipe").css("display", "flex");
     animate("#show-recipe", {
         opacity: 0,
         duration: 1000,
@@ -646,10 +486,22 @@ $("#close-recipe").on("click", function(){
    ========================= */
 
 $("#search").on("click", function(){
+    $("#result-display").find("img").each(function(){
+        const imageURL = $(this).attr("src");
+
+        if (imageURL && imageURL.startsWith("blob:")) {
+            URL.revokeObjectURL(imageURL);
+        }
+    });
     $("#result-display").empty();
 
     const recipeInput = $("#recipe-search");
     const recipeToSearch = recipeInput.val().trim().toLowerCase();
+
+    if (recipeToSearch === "") {
+        return;
+    }
+
     const wordsToSearch = recipeToSearch.toLowerCase().split(/\s+/);
 
     const foundRecipes = allRecipes.filter(recipe => {
@@ -685,7 +537,7 @@ $("#search").on("click", function(){
             $("#result-display").append(html);
         })
     }
-
+    $("#recipe-search-results").css("display", "flex");
     animate("#recipe-search-results", {
         opacity: 1,
         duration: 1000,
@@ -693,7 +545,6 @@ $("#search").on("click", function(){
         oncomplete: function(){
             $("nav").css("filter", "blur(5px)");
             $("main").css("filter", "blur(5px)");
-            $("#recipe-search-results").css("display", "Flex");
             hideBottomNav();
         }
     });
@@ -707,7 +558,7 @@ function hideRecipeSearchResults(){
         oncomplete: function(){
             $("nav").css("filter", "blur(0px)");
             $("main").css("filter", "blur(0px)");
-            $("#recipe-search-results").css("display", "None");
+            $("#recipe-search-results").css("display", "none");
         }
     });
 }
@@ -736,7 +587,7 @@ function closeAddRecipe(){
         oncomplete: function(){
             $("nav").css("filter", "blur(0px)");
             $("main").css("filter", "blur(0px)");
-            $("#add-new-recipe").css("display", "None");
+            $("#add-new-recipe").css("display", "none");
             recipeError = false;
             location.reload();
         }
@@ -744,6 +595,7 @@ function closeAddRecipe(){
 }
 
 $("#add-button").on("click", function(){
+    $("#add-new-recipe").css("display", "flex");
     animate("#add-new-recipe", {
         opacity: 1,
         duration: 1000,
@@ -751,7 +603,6 @@ $("#add-button").on("click", function(){
         oncomplete: function(){
             $("nav").css("filter", "blur(5px)");
             $("main").css("filter", "blur(5px)");
-            $("#add-new-recipe").css("display", "Flex");
             hideBottomNav();
         }
     });
@@ -766,7 +617,7 @@ function showRecipeError(input){
     recipeError = true;
 }
 
-$("#submit-new-recipe").on("click", function(){
+$("#submit-new-recipe").on("click", async function(){
     recipeError = false;
     const recipeName = $("#new-recipe-name").val();
     const recipeType = $("#new-recipe-type").val();
@@ -775,19 +626,19 @@ $("#submit-new-recipe").on("click", function(){
     const recipeInstructions = $("#new-recipe-instructions").val();
     const imageInput = $("#recipe-image-input");
 
-    if(recipeName === ""){
+    if(recipeName.trim() === ""){
         showRecipeError($("#new-recipe-name"));
     }
     if (!recipeType){
         showRecipeError($("#new-recipe-type"));
     }
-    if(recipeDescription === ""){
+    if(recipeDescription.trim() === ""){
         showRecipeError($("#new-recipe-description"));
     }
-    if (recipeIngredients === ""){
+    if (recipeIngredients.trim() === ""){
         showRecipeError($("#new-recipe-ingredients"));
     }
-    if (recipeInstructions === ""){
+    if (recipeInstructions.trim() === ""){
         showRecipeError($("#new-recipe-instructions"));
     }
     if (imageInput[0].files.length === 0){
@@ -799,32 +650,65 @@ $("#submit-new-recipe").on("click", function(){
     }
     else{
         let newRecipeToAdd = {
+            id : crypto.randomUUID(),
             type : recipeType,
             name : recipeName,
             description : recipeDescription,
-            ingredients : recipeIngredients.split("\n"),
-            instructions : recipeInstructions.split("\n"),
-            image : $("#recipe-image-input")[0].files[0]
+            ingredients : recipeIngredients.split("\n")
+            .map(line => line.trim())
+            .filter(line => line !== ""),
+            instructions : recipeInstructions.split("\n")
+            .map(line => line.trim())
+            .filter(line => line !== ""),
+            image : $("#recipe-image-input")[0].files[0],
+            status : "Pending"
         }
 
-        const transaction = db.transaction([STORE_NAME], "readwrite");
+        const addTransaction = db.transaction([STORE_NAME], "readwrite");
 
-        transaction.oncomplete = (event) => {
+        addTransaction.oncomplete = async (event) => {
             console.log("Transaction Complete");
-            readDB();
+            if (navigator.onLine){
+                const synced = await writeToSupabase(newRecipeToAdd);
+                if(synced){
+                    newRecipeToAdd.status = "Synced";
+                }
+                else{
+                    newRecipeToAdd.status = "Pending";
+                }
+            }
+            else{
+                newRecipeToAdd.status = "Pending";
+            }
+
+            const updateTransaction = db.transaction([STORE_NAME], "readwrite");
+
+            updateTransaction.oncomplete = (event) => {
+                console.log("Transaction Complete");
+                readDB("Read");
+                closeAddRecipe();
+            }
+
+            updateTransaction.onerror = (event) => {
+                console.log("Transaction Error");
+            }
+
+            let updateObjectStore = updateTransaction.objectStore(STORE_NAME);
+            let updateRequest = updateObjectStore.put(newRecipeToAdd);
+            updateRequest.onsuccess = (event) => {
+                console.log(`${event.target.result} added.`)
+            }
         }
 
-        transaction.onerror = (event) => {
+        addTransaction.onerror = (event) => {
             console.log("Transaction Error");
         }
 
-        const objectStore = transaction.objectStore(STORE_NAME);
-        const request = objectStore.add(newRecipeToAdd);
+        let objectStore = addTransaction.objectStore(STORE_NAME);
+        let request = objectStore.add(newRecipeToAdd);
         request.onsuccess = (event) => {
             console.log(`${event.target.result} added.`)
         }
-
-        closeAddRecipe();
     }
 })
 

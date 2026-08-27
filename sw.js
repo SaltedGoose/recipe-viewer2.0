@@ -1,4 +1,4 @@
-const CACHE_NAME = "recipe-viewer-v10";
+const CACHE_NAME = "recipe-viewer-v11";
 
 const FILES_TO_CACHE = [
     "./",
@@ -8,7 +8,8 @@ const FILES_TO_CACHE = [
     "./manifest.json",
     "./sw.js",
     "./jquery-4.0.0.min.js",
-    "./anime.esm.min.js"
+    "./anime.esm.min.js",
+    "./supabase.js"
 ];
 
 self.addEventListener("install", event => {

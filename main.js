@@ -137,11 +137,21 @@ async function writeToSupabase(recipe) {
     // Upload image
     const { error: imageError } = await supabase.storage
         .from("recipe-images")
-        .upload(imagePath, recipe.image);
+        .upload(imagePath, recipe.image, {
+            contentType: recipe.image.type,
+            upsert: false
+        });
 
-    if (imageError) {
+   if (imageError) {
         console.error("Image upload failed:", imageError);
-        alert("Image upload failed:", imageError);
+
+        alert(
+            "Image upload failed!\n\n" +
+            "Message: " + imageError.message + "\n" +
+            "Status: " + imageError.status + "\n" +
+            "Status code: " + imageError.statusCode
+        );
+
         return false;
     }
 

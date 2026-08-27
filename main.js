@@ -131,19 +131,93 @@ async function getImageFromSupabse(imageURL) {
 // ======================================================
 
 async function writeToSupabase(recipe) {
-    const fileExtension = recipe.image.name.split(".").pop();
+    if (!recipe.image) {
+        console.error("No image exists!");
+        alert("No image was provided.");
+        return false;
+    }
+
+    // ======================================================
+    // Convert image to Blob
+    // ======================================================
+
+    let imageBlob;
+
+    try {
+
+        imageBlob = new Blob(
+            [await recipe.image.arrayBuffer()],
+            {
+                type: recipe.image.type || "image/jpeg"
+            }
+        );
+
+        console.log("Blob created:", imageBlob);
+        console.log("Blob type:", imageBlob.type);
+        console.log("Blob size:", imageBlob.size);
+
+    }
+    catch (error) {
+
+        console.error("Failed to create image Blob:", error);
+
+        alert(
+            "Could not process the image.\n\n" +
+            error.message
+        );
+
+        return false;
+    }
+
+    if (imageBlob.size === 0) {
+
+        console.error("Image Blob is empty!");
+
+        alert("The selected image contains no data.");
+
+        return false;
+    }
+
+    // ======================================================
+    // Determine file extension
+    // ======================================================
+
+    let fileExtension = "jpg";
+
+    if (recipe.image.type === "image/png") {
+        fileExtension = "png";
+    }
+    else if (recipe.image.type === "image/webp") {
+        fileExtension = "webp";
+    }
+    else if (recipe.image.type === "image/jpeg") {
+        fileExtension = "jpg";
+    }
+
     const imagePath = `${recipe.id}.${fileExtension}`;
 
-    // Upload image
-    const { error: imageError } = await supabase.storage
-        .from("recipe-images")
-        .upload(imagePath, recipe.image, {
-            contentType: recipe.image.type,
-            upsert: false
-        });
+    console.log("Uploading:", imagePath);
 
-   if (imageError) {
-        console.error("Image upload failed:", imageError);
+    // ======================================================
+    // Upload image
+    // ======================================================
+
+    const { data: imageData, error: imageError } =
+        await supabase.storage
+            .from("recipe-images")
+            .upload(
+                imagePath,
+                imageBlob,
+                {
+                    contentType: imageBlob.type,
+                    upsert: false
+                }
+            );
+
+    if (imageError) {
+
+        console.error("IMAGE UPLOAD FAILED");
+        console.error(imageError);
 
         alert(
             "Image upload failed!\n\n" +
@@ -155,8 +229,15 @@ async function writeToSupabase(recipe) {
         return false;
     }
 
-    // Make a copy without the image
+    console.log("Image uploaded successfully!");
+    console.log(imageData);
+
+    // ======================================================
+    // Upload recipe information
+    // ======================================================
+
     const recipeForSupabase = {
+
         id: recipe.id,
         type: recipe.type,
         name: recipe.name,
@@ -164,33 +245,46 @@ async function writeToSupabase(recipe) {
         ingredients: recipe.ingredients,
         instructions: recipe.instructions,
         image_path: imagePath
+
     };
 
-    // Upload recipe data
-    const { error: recipeError } = await supabase
-        .from("recipes")
-        .insert(recipeForSupabase);
+    const { error: recipeError } =
+        await supabase
+            .from("recipes")
+            .insert(recipeForSupabase);
 
     if (recipeError) {
+
         console.error("Recipe upload failed:", recipeError);
-        alert("Recipe upload failed:", recipeError);
-        // Recipe failed, so remove the image we just uploaded
-        const { error: deleteError } = await supabase.storage
-            .from("recipe-images")
-            .remove([imagePath]);
+
+        alert(
+            "Recipe upload failed!\n\n" +
+            "Message: " + recipeError.message + "\n" +
+            "Code: " + recipeError.code + "\n" +
+            "Details: " + recipeError.details
+        );
+
+        // Remove image if database upload failed
+        const { error: deleteError } =
+            await supabase.storage
+                .from("recipe-images")
+                .remove([imagePath]);
+
         if (deleteError) {
             console.error(
                 "Failed to remove orphaned image:",
                 deleteError
             );
         }
-        else {
-            console.log("Orphaned image removed:",imagePath);
-        }
+
         return false;
     }
 
-    console.log("Recipe uploaded to Supabase:",recipe.name);
+    console.log(
+        "Recipe uploaded to Supabase:",
+        recipe.name
+    );
+
     return true;
 }
 

@@ -839,3 +839,10 @@ $("#recipe-image-input").on("change", function(){
 $("#cancel-recipe").on("click", function(){
     closeAddRecipe();
 })
+
+$("#empty-indexdb").on("click", function(){
+    const transaction = db.transaction("recipes", "readwrite");
+    const store = transaction.objectStore("recipes");
+
+    store.clear();
+})

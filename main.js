@@ -163,7 +163,7 @@ async function writeToSupabase(recipe) {
 
     if (recipeError) {
         console.error("Recipe upload failed:", recipeError);
-        alert("Image upload failed:", imageError);
+        alert("Recipe upload failed:", recipeError);
         // Recipe failed, so remove the image we just uploaded
         const { error: deleteError } = await supabase.storage
             .from("recipe-images")
